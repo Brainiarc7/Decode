@@ -12,7 +12,7 @@
 		<footer class="entry-meta">
 			<?php if (get_theme_mod( 'enable_comments', true ) == true ) : ?>
 				<?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
-				<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'decode' ), __( '1 Comment', 'decode' ), __( '% Comments', 'decode' ) ); ?></span>
+				<div class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'decode' ), __( '1 Comment', 'decode' ), __( '% Comments', 'decode' ) ); ?></div>
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php edit_post_link( __( 'Edit', 'decode' ), '<span class="edit-link">', '</span>' ); ?>
@@ -35,13 +35,13 @@
 					<?php the_post_thumbnail(); ?>
 				</a>
 				<?php endif; ?>
-			<div class="entry-title"><h2><?php if (get_theme_mod( 'link_post_title_arrow', false ) == true ) echo '<span class="link-title-arrow">&#8594;</span>'; ?><?php decode_print_post_title() ?></h2></div>
+			<div class="entry-title"><h2><?php decode_print_post_title() ?><?php if (get_theme_mod( 'link_post_title_arrow', false ) == true ) echo '<span class="link-title-arrow">&#8594;</span>'; ?></h2></div>
 		</header>
 		<div class="entry-content"><?php the_content( __( 'continue reading &raquo;', 'decode' ) ); ?></div>
 		<footer class="entry-meta">
 			<?php if (get_theme_mod( 'enable_comments', true ) == true ) : ?>
 				<?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
-				<span class="comments-link <?php echo get_theme_mod( 'enable_comments', '' ); ?>"><?php comments_popup_link( __( 'Leave a comment', 'decode' ), __( '1 Comment', 'decode' ), __( '% Comments', 'decode' ) ); ?></span>
+				<div class="comments-link <?php echo get_theme_mod( 'enable_comments', '' ); ?>"><?php comments_popup_link( __( 'Leave a comment', 'decode' ), __( '1 Comment', 'decode' ), __( '% Comments', 'decode' ) ); ?></div>
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php edit_post_link( __( 'Edit', 'decode' ), '<div class="edit-link">', '</div>' ); ?>
@@ -100,7 +100,7 @@
 		<footer class="entry-meta">
 			<?php if (get_theme_mod( 'enable_comments', true ) == true ) : ?>
 				<?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
-				<span class="comments-link <?php echo get_theme_mod( 'enable_comments', '' ); ?>"><?php comments_popup_link( __( 'Leave a comment', 'decode' ), __( '1 Comment', 'decode' ), __( '% Comments', 'decode' ) ); ?></span>
+				<div class="comments-link <?php echo get_theme_mod( 'enable_comments', '' ); ?>"><?php comments_popup_link( __( 'Leave a comment', 'decode' ), __( '1 Comment', 'decode' ), __( '% Comments', 'decode' ) ); ?></div>
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php edit_post_link( __( 'Edit', 'decode' ), '<div class="edit-link">', '</div>' ); ?>

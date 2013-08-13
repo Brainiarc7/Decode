@@ -16,6 +16,18 @@ function decode_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 	$wp_customize->get_setting( 'background_color' )->transport = 'postMessage';
 
+class Decode_Customize_Textarea_Control extends WP_Customize_Control {
+    public $type = 'textarea';
+ 
+    public function render_content() {
+        ?>
+        <label>
+        <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+        <textarea rows="5" style="width:100%; padding: 5px;" <?php $this->link(); ?>><?php echo esc_textarea( $this->value() ); ?></textarea>
+        </label>
+        <?php
+    }
+}
 
 
 /**
@@ -38,10 +50,21 @@ function decode_customize_register( $wp_customize ) {
 	
 	$wp_customize->add_setting( 'show_site_title', array(
 		'default' => true,
+		'transport' => 'postMessage',
 	) );
 	
 	$wp_customize->add_setting( 'show_site_description', array(
 		'default' => true,
+		'transport' => 'postMessage',
+	) );
+	
+	$wp_customize->add_setting( 'show_site_navigation', array(
+		'default' => true,
+		'transport' => 'postMessage',
+	) );
+	
+	$wp_customize->add_setting( 'html_description', array(
+		'default' => '',
 	) );
 
 
@@ -72,6 +95,20 @@ function decode_customize_register( $wp_customize ) {
 		'type'    => 'checkbox',
 		'priority'=> 4,
 	) );
+	
+	$wp_customize->add_control( 'show_site_navigation', array(
+		'label'   => 'Show Navigation',
+		'section' => 'decode_header_options',
+		'type'    => 'checkbox',
+		'priority'=> 5,
+	) );
+	
+	$wp_customize->add_control( 'html_description', array(
+		'label'   => 'HTML for description, if you wish to replace your blog description with HTML markup',
+		'section' => 'decode_header_options',
+		'type'    => 'text',
+		'priority'=> 6,
+	) );
 
 
 
@@ -87,6 +124,7 @@ function decode_customize_register( $wp_customize ) {
 
     $wp_customize->add_setting( 'show_sidebar', array(
 		'default'  => true,
+		'transport' => 'postMessage',
 	) );
 
 	$wp_customize->add_setting( 'sidebar_position', array(
@@ -141,6 +179,7 @@ function decode_customize_register( $wp_customize ) {
 
 	$wp_customize->add_setting( 'enable_comments', array(
 		'default' => true,
+		'transport' => 'postMessage',
 	) );
 
 
@@ -165,6 +204,7 @@ function decode_customize_register( $wp_customize ) {
 
 	$wp_customize->add_setting( 'show_social_icons', array(
 		'default' => false,
+		'transport' => 'postMessage',
 	) );
 
 	$wp_customize->add_setting( 'twitter_username', array(
@@ -402,26 +442,27 @@ function decode_customize_register( $wp_customize ) {
 
     $wp_customize->add_setting( 'show_tags', array(
 		'default' => false,
+		'transport' => 'postMessage',
 	) );
 
 	$wp_customize->add_setting( 'show_categories', array(
 		'default' => false,
+		'transport' => 'postMessage',
 	) );
 
 	$wp_customize->add_setting( 'link_post_title_arrow', array(
 		'default' => false,
+		'transport' => 'postMessage',
 	) );
 
     $wp_customize->add_setting( 'show_theme_info', array(
 		'default' => true,
+		'transport' => 'postMessage',
 	) );
 
 	$wp_customize->add_setting( 'site_colophon', array(
 		'default' => '',
-	) );
-
-	$wp_customize->add_setting( 'html_description', array(
-		'default' => '',
+		'transport' => 'postMessage',
 	) );
 
 
@@ -459,21 +500,14 @@ function decode_customize_register( $wp_customize ) {
 		'type'    => 'checkbox',
 		'priority'=> 5,
 	) );
-
-	$wp_customize->add_control( 'site_colophon', array(
-		'label'   => 'Text (colophon, copyright, credits, etc.) for the footer of the site',
-		'section' => 'decode_reading_options',
-		'type'    => 'text',
-		'priority'=> 6,
-	) );
-
-	$wp_customize->add_control( 'html_description', array(
-		'label'   => 'HTML for description, if you wish to replace your blog description with HTML markup',
-		'section' => 'decode_reading_options',
-		'type'    => 'text',
-		'priority'=> 7,
-	) );
-
+	
+	$wp_customize->add_control( new Decode_Customize_Textarea_Control( $wp_customize, 'site_colophon', array(
+	    'label'   => 'Text (colophon, copyright, credits, etc.) for the footer of the site',
+	    'section' => 'decode_reading_options',
+	    'settings'=> 'site_colophon',
+	    'priority'=> 6,
+	) ) );
+	
 
 
 /**
@@ -533,6 +567,6 @@ add_action( 'customize_register', 'decode_customize_register' );
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function decode_customize_preview_js() {
-	wp_enqueue_script( 'decode_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '201308051', true );
+	wp_enqueue_script( 'decode_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '2.6.3', true );
 }
 add_action( 'customize_preview_init', 'decode_customize_preview_js' );
